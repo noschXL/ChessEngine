@@ -16,6 +16,9 @@ func main() {
 	rl.SetTargetFPS(60)
 
 	for !rl.WindowShouldClose() {
+
+		HandleMouse(board)
+
 		rl.BeginDrawing()
 		DrawSquares()
 		DrawPieces(board, PIECETEXTURE)
