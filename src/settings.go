@@ -49,7 +49,7 @@ func AppendFilePath(path string, toAppend []string) string {
 }
 
 type Move struct {
-	from    int8
-	to      int8
-	special int8
+	from    uint8
+	to      uint8
+	special uint8
 }

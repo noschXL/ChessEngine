@@ -1,10 +1,28 @@
 package main
 
 import (
-	"math"
+	"image/color"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
+
+func ResizeAndBlurTexture(width int32, height int32, texture rl.Texture2D) rl.Texture2D {
+	newTexture := rl.LoadRenderTexture(width, height)
+	rl.BeginTextureMode(newTexture)
+	rl.DrawTexturePro(
+		texture,
+		rl.Rectangle{X: 0, Y: 0, Width: float32(texture.Width), Height: float32(texture.Height)},
+		rl.Rectangle{X: 0, Y: 0, Width: float32(width), Height: float32(height)},
+		rl.NewVector2(0, 0),
+		0,
+		color.RGBA{255, 255, 255, 255},
+	)
+	rl.EndTextureMode()
+	//img := rl.LoadImageFromTexture(newTexture.Texture)
+	//rl.ImageBlurGaussian(img, 5)
+	return newTexture.Texture
+
+}
 
 func DrawBoard(board [65]uint8) {
 
@@ -30,38 +48,20 @@ func DrawPieces(board [65]uint8, PIECETEXTURE rl.Texture2D) {
 
 			data := board[i*8+j]
 
-			piecetype := GetType(data)
-			piececolor := uint8(math.Abs(float64(GetColor(data)>>3) - 1))
+			piecetype := GetType(data) - 1
+			piececolor := GetColor(data) >> 4
 
 			if IsEmpty(data) {
 				break
 			}
 
-			imgsize := PIECETEXTURE.Height / 2
+			imgWidth := PIECETEXTURE.Width / 6
+			imgHeight := PIECETEXTURE.Height / 2
 
-			x := imgsize * int32(piecetype-1)
-			y := imgsize * int32(piececolor)
+			x := int(imgWidth) * int(piecetype) // EMPTY = 0 but the king is at pos 0 and so on
+			y := int(imgHeight) * int(piececolor)
 
-			texture_rect := rl.Rectangle{
-				X:      float32(x),
-				Y:      float32(y),
-				Width:  float32(imgsize),
-				Height: float32(imgsize),
-			}
-
-			dest_rect := rl.Rectangle{
-				X:      float32(int32(j)*100) + 10,
-				Y:      float32(int32(i)*100) + 10,
-				Width:  100,
-				Height: 100,
-			}
-
-			origin := rl.Vector2{
-				X: 10,
-				Y: 10,
-			}
-
-			rl.DrawTexturePro(PIECETEXTURE, texture_rect, dest_rect, origin, 0, rl.RayWhite)
+			rl.DrawTextureRec(PIECETEXTURE, rl.Rectangle{X: float32(x), Y: float32(y), Width: float32(imgWidth), Height: float32(imgHeight)}, rl.Vector2{X: float32(j * 100), Y: float32(i * 100)}, rl.White)
 		}
 	}
 }

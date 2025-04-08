@@ -15,5 +15,6 @@ var lastSqaure Field = Field{9, 9}
 
 func HandleMouse(board [65]uint8) {
 	pressed := rl.IsMouseButtonPressed(rl.MouseButtonLeft)
-
+	pressed = !pressed
+	return
 }

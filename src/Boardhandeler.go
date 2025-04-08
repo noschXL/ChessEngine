@@ -29,7 +29,7 @@ func DrawMove(board [65]uint8, move Move, PIECETEXTURE rl.Texture2D, drawmove bo
 	board[move.from] = EMPTY
 
 	if drawmove {
-		for t := 0; t < 60; t++ {
+		for t := range 60 {
 			rl.BeginDrawing()
 			rl.ClearBackground(rl.RayWhite)
 			DrawSquares()

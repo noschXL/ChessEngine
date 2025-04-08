@@ -1,8 +1,8 @@
-module main
+module ChessEngine
 
-go 1.23.3
+go 1.23.6
 
-require github.com/gen2brain/raylib-go/raylib v0.0.0-20241117153000-01864c04b849
+require github.com/gen2brain/raylib-go/raylib v0.0.0-20250327103758-b542022337b8
 
 require (
 	github.com/ebitengine/purego v0.7.1 // indirect

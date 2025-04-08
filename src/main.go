@@ -9,8 +9,9 @@ func main() {
 	board := LoadFEN(STARTFEN)
 
 	rl.InitWindow(800, 800, "Chess Engine")
-	PIECETEXTURE := rl.LoadTexture(AppendFilePath(GetPath(), []string{"img", "pieces.png"}))
-
+	pieceimg := rl.LoadImage(AppendFilePath(GetPath(), []string{"img", "pieces.png"}))
+	rl.ImageResize(pieceimg, 600, 200)
+	piecetexture := rl.LoadTextureFromImage(pieceimg)
 	defer rl.CloseWindow()
 
 	rl.SetTargetFPS(60)
@@ -21,7 +22,7 @@ func main() {
 
 		rl.BeginDrawing()
 		DrawSquares()
-		DrawPieces(board, PIECETEXTURE)
+		DrawPieces(board, piecetexture)
 
 		rl.EndDrawing()
 	}
